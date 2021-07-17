@@ -1,32 +1,13 @@
 import './App.css';
 import CardWiget from './components/card/index';
+import data from './apisample/localapi';
 
 function App() {
 
-  const axios = require('axios');
+  let myData = data.map((item, index) => {
+    return <CardWiget key={index} title={item.name} artist={item.artists[0].name} album={item.album.name} href={item.href}/>;
+  });
 
-  // eslint-disable-next-line no-array-constructor
-  let arrData = new Array();
-
-  axios.get('https://gist.githubusercontent.com/aryapradipta9/e6492383477803b233916e01f36d5465/raw/66942c739d66d3774303f84071696aa865a07077/single-sample.json')
-    .then(function (response) {
-      // handle success
-      let getData = {
-        title: response.data.name,
-        artist: response.data.artists[0].name,
-        album: response.data.album.name,
-        url: response.data.album.images[1].url
-      };
-      
-      arrData.push(getData);
-
-    })
-    .catch(function (error) {
-      // handle error
-      alert(error);
-  })
-
-  console.log(arrData);
   return (
     <div className="container-fluid p-3">
       <h2 className="text-center"><b>CREATE PLAYLIST</b></h2>
@@ -48,7 +29,7 @@ function App() {
         </div>
       </form>
       <div className="row row-cols-1 row-cols-md-3 g-4 m-3 playlist-track">
-        <CardWiget title="" artist="" album=""/>
+        {myData}
       </div>
     </div>
   );
